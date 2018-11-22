@@ -1,0 +1,10 @@
+{% if species %}
+    <ul>
+    {% for species in species %}
+        <p>{{species.title}}</p>
+        <img src="{{ species.image_url }}" alt="img">
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No species in Data Base.</p>
+{% endif %}
