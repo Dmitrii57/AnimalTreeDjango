@@ -22,3 +22,14 @@ class List(models.Model):
         managed = False
         db_table = 'list'
         unique_together = (('kingdom', 'title'),)
+
+    def init_childs(self):
+        self.childs = List.objects.filter(parent=self.id)
+        return self.childs
+
+    def init_tree_structure(self, depth):
+        if (depth):
+            depth -= 1
+            cur_childs = self.init_childs()
+            for child in cur_childs:
+                child.init_tree_structure(depth)

@@ -4,9 +4,13 @@ from . import views
 app_name = 'species'
 
 urlpatterns = [
-    path('treea/',
-         views.TreeList.as_view()),
-    path('treed/',
-         views.TreeDetail.as_view()),
-    path('', views.tree, name='Tree'),
+    path('<int:pk>',
+         views.TreeDetail.as_view(),
+         name='TreeDetail'),
+    path('',
+         views.TreeList.as_view(),
+         name='TreeList'),
+    path('a/',
+         views.tree,
+         name='Tree'),
 ]

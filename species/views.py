@@ -7,7 +7,8 @@ from django.template import loader
 from .models import List
 
 def tree(request):
-    species = List.objects.all()
+    species = List.objects.get(id=1)
+    species.init_tree_structure(2)
     template = loader.get_template('tree.html')
     context = {
         'species': species,

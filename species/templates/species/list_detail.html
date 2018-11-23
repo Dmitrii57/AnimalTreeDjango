@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object.title}} - {{ block.super }}
+{% endblock %}
+
+{% block main %}
+    <p>Название: {{object.title}}</p>
+    <p>Название: {{object.title}}</p>
+    <img src="{{ object.image_url }}" alt="img">
+{% endblock %}
