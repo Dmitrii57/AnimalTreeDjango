@@ -1,0 +1,19 @@
+<form name="species_with_childs" action="/species/a/" method="post">
+    {% csrf_token %}
+        <table>
+            <tr>
+                <td colspan="100%">
+                    <button type="submit">
+                        {% include "species/species.html" with species=species %}
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                {% for child in species.childs %}
+                    <td>
+                        {% include "species/species_with_childs.html" with species=child %}
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+</form>

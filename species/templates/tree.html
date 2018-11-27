@@ -1,27 +1,19 @@
+
 <style>
     td{
-        border: solid 1px silver;
+        border: solid 1px black;
         text-align:center;
+        vertical-align: top;
     }
 </style>
-{% if species %}
+{% block title %}Species Tree{% endblock %}
+{% block main %}
+    {% if species %}
+    <input type="text" size="40">
     <ul>
-    <table>
-        <tr><td colspan="100%">
-            <p>{{species.title}}</p>
-            <img src="{{ species.image_url }}" alt="img" width="400px" height="400px">
-        </tr></td>
-        <tr>
-            {% for child in species.childs %}
-                <td>
-                    {%with species=child template_name="tree.html" %}
-                       {%include template_name%}
-                    {%endwith%}
-                </td>
-            {% endfor %}
-        </tr>
-    </table>
+    {% include "species/species_with_childs.html" with species=species %}
     </ul>
 {% else %}
     <p>No species in Data Base.</p>
 {% endif %}
+{% endblock %}

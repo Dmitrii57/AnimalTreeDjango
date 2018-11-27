@@ -1,15 +1,8 @@
 from django.db import models
+from itertools import chain
+from species.models.kingdoms import Kingdoms
 
-class Kingdoms(models.Model):
-    title = models.TextField(unique=True)
-    list_url = models.TextField(unique=True)
-
-    class Meta:
-        managed = False
-        db_table = 'kingdoms'
-
-
-class List(models.Model):
+class Species(models.Model):
     id = models.BigAutoField(primary_key=True)
     kingdom = models.ForeignKey(Kingdoms, models.DO_NOTHING)
     title = models.TextField()
@@ -19,13 +12,19 @@ class List(models.Model):
     parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
+        app_label = 'species'
         managed = False
         db_table = 'list'
         unique_together = (('kingdom', 'title'),)
 
     def init_childs(self):
-        self.childs = List.objects.filter(parent=self.id)
+        self.childs = Species.objects.filter(parent=self.id)
         return self.childs
+
+    def init_childs(self, t):
+        self.childs = Species.objects.filter(parent=self.id).exclude(id = t.id)
+        self.childs = list(chain(self.childs, [t]))
+        return self
 
     def init_tree_structure(self, depth):
         if (depth):
@@ -33,3 +32,9 @@ class List(models.Model):
             cur_childs = self.init_childs()
             for child in cur_childs:
                 child.init_tree_structure(depth)
+
+    def get_root(self):
+        cur = self
+        while(cur.parent != None):
+            cur = Species.objects.get(id=cur.parent.id).init_childs(cur)
+        return cur

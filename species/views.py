@@ -1,22 +1,24 @@
 from django.shortcuts import render
-
-from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
 from django.template import loader
 
-from .models import List
+from .models import Species
 
 def tree(request):
-    species = List.objects.get(id=1)
-    species.init_tree_structure(2)
-    template = loader.get_template('tree.html')
-    context = {
-        'species': species,
-    }
-    return HttpResponse(template.render(context, request))
+    if request.method != 'POST':
+        species = Species.objects.get(id=200)
+        species = species.get_root()
+        #species.init_tree_structure(2)
+        template = loader.get_template('tree.html')
+        context = {
+            'species': species,
+        }
+        return HttpResponse(template.render(context, request))
+    else:
+        species = Species.objects.get(id=180)
+        species = species.get_root()
+        return render(request, 'tree.html', {'species': species})
 
-class TreeList(ListView):
-    model = List
-
-class TreeDetail(DetailView):
-    model = List
+def autocompleteSpecies(request):
+    species = Species.objects.filter(title__contains=request.REQUEST['search'])
+    results = [spec for spec in species]
