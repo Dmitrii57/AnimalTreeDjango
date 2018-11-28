@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
@@ -38,10 +37,12 @@ def autocomplete(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
+@csrf_exempt
 def search(request):
     if(request.method == 'POST'):
-        species = Species.objects.get(id=request.POST.get('id'))
-        species.get_root()
+        print(request.POST.get('name'))
+        species = Species.objects.get(title=request.POST.get('name'))
+        species = species.get_root()
         template = loader.get_template('species/species_with_childs.html')
         context = {
             'species': species,

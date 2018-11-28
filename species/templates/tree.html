@@ -18,6 +18,15 @@
            }
          });
    });
+   $(function(){
+        $("#search").click(function(){
+            $.post('/species/search/',
+                   { 'name':document.getElementById("searching_species").value},
+                   function(data) {
+                     $("#table1").replaceWith(data);
+                   });
+        });
+    });
 </script>
     {% if species %}
         <form>
@@ -25,6 +34,7 @@
                 <input id="searching_species">
             </div>
         </form>
+        <button id="search">Искать</button>
         <ul>
             {% include "species/species_with_childs.html" with species=species %}
         </ul>
