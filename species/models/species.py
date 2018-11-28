@@ -21,7 +21,7 @@ class Species(models.Model):
         self.childs = Species.objects.filter(parent=self.id)
         return self.childs
 
-    def init_childs(self, t):
+    def init_childs_with_object(self, t):
         self.childs = Species.objects.filter(parent=self.id).exclude(id = t.id)
         self.childs = list(chain(self.childs, [t]))
         return self
@@ -36,5 +36,5 @@ class Species(models.Model):
     def get_root(self):
         cur = self
         while(cur.parent != None):
-            cur = Species.objects.get(id=cur.parent.id).init_childs(cur)
+            cur = Species.objects.get(id=cur.parent.id).init_childs_with_object(cur)
         return cur
