@@ -40,7 +40,6 @@ def autocomplete(request):
 @csrf_exempt
 def search(request):
     if(request.method == 'POST'):
-        print(request.POST.get('name'))
         species = Species.objects.get(title=request.POST.get('name'))
         species = species.get_root()
         template = loader.get_template('species/species_with_childs.html')

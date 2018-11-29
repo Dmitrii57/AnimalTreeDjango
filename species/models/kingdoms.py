@@ -6,5 +6,5 @@ class Kingdoms(models.Model):
 
     class Meta:
         app_label='species'
-        managed = False
+        managed = True
         db_table = 'kingdoms'

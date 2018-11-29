@@ -3,7 +3,6 @@ from itertools import chain
 from species.models.kingdoms import Kingdoms
 
 class Species(models.Model):
-    id = models.BigAutoField(primary_key=True)
     kingdom = models.ForeignKey(Kingdoms, models.DO_NOTHING)
     title = models.TextField()
     page_url = models.TextField()
@@ -13,9 +12,9 @@ class Species(models.Model):
 
     class Meta:
         app_label = 'species'
-        managed = False
+        managed = True
         db_table = 'list'
-        unique_together = (('kingdom', 'title'),)
+        unique_together = (('kingdom', 'title', 'type'),)
 
     def init_childs(self):
         self.childs = Species.objects.filter(parent=self.id)
