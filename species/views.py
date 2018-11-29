@@ -10,7 +10,7 @@ def tree(request):
     if request.method != 'POST':
         species = Species.objects.get(id=1)
         species.init_tree_structure(2)
-        template = loader.get_template('tree.html')
+        template = loader.get_template('species/tree.html')
         context = {
             'species': species,
         }

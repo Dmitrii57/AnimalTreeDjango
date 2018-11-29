@@ -13,13 +13,13 @@ pgConnection=psycopg2.connect(pgConnectString)
 pgCursor = pgConnection.cursor()
 
 # select from the table
-pgCursor.execute("SELECT id, title, list_url from public.kingdoms")
+pgCursor.execute("SELECT id, kingdom_id, title, page_url, type, image_url, parent_id from public.list")
 rows = pgCursor.fetchall()
 
 # loop and insert into sqlite
-sqliteCursor.execute("delete from main.kingdoms")
+sqliteCursor.execute("delete from main.list")
 for row in rows:
-    sqliteCursor.execute("INSERT INTO main.kingdoms (id, title, list_url) VALUES (:id, :title, :list_url)", {'id':row[0], 'title':row[1], 'list_url':str(row[2])})
+    sqliteCursor.execute("INSERT INTO main.list (id, kingdom_id, title, page_url, type, image_url, parent_id) VALUES (:id, :kingdom_id, :title, :page_url, :type, :image_url, :parent_id)", {'id':row[0], 'kingdom_id':row[1], 'title':row[2], 'page_url':str(row[3]), 'type':row[4], 'image_url':str(row[5]), 'parent_id':row[6]})
     sqliteConnection.commit()
 
 # close all connections

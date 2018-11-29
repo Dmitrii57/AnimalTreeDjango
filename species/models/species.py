@@ -25,7 +25,7 @@ class Species(models.Model):
         self.childs = list(chain(self.childs, [t]))
         return self
 
-    def init_tree_structure_with_depth(self, depth):
+    def init_tree_structure(self, depth):
         if depth:
             depth -= 1
             cur_childs = self.init_childs()

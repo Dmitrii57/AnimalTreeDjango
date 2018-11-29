@@ -1,19 +1,7 @@
-<script type="text/javascript">
-    $(function(){
-        $("#{{ species.id }}").click(function(){
-            $.post('/species/a/',
-                   { 'id':'{{ species.id }}',
-                     'childs':'{{ species.childs|length }}'},
-                   function(data) {
-                     $("#table{{ species.id }}").replaceWith(data);
-                   });
-        });
-    });
-</script>
 <table id="table{{ species.id }}">
     <tr>
         <td colspan="100%">
-            <button id="{{ species.id }}">
+            <button onclick="update_species({{ species.id }}, {{ species.childs|length }})">
                 {% include "species/species.html" with species=species %}
             </button>
         </td>
