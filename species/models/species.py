@@ -20,13 +20,13 @@ class Species(models.Model):
         self.childs = Species.objects.filter(parent=self.id)
         return self.childs
 
-    def init_childs_with_object(self, t):
-        self.childs = Species.objects.filter(parent=self.id).exclude(id = t.id)
+    def __init_childs(self, t):
+        self.childs = Species.objects.filter(parent=self.id).exclude(id=t.id)
         self.childs = list(chain(self.childs, [t]))
         return self
 
-    def init_tree_structure(self, depth):
-        if (depth):
+    def init_tree_structure_with_depth(self, depth):
+        if depth:
             depth -= 1
             cur_childs = self.init_childs()
             for child in cur_childs:
@@ -34,6 +34,6 @@ class Species(models.Model):
 
     def get_root(self):
         cur = self
-        while(cur.parent != None):
-            cur = Species.objects.get(id=cur.parent.id).init_childs_with_object(cur)
+        while cur.parent is not None:
+            cur = Species.objects.get(id=cur.parent.id).__init_childs(cur)
         return cur
