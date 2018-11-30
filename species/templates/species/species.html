@@ -1,2 +1,6 @@
 <p>{{species.title}}</p>
-<input id="image" type="image"  src="{{ species.image_url }}" width="100px" height="100px">
+{% if species.image_url != 'None'%}
+    <input id="image" type="image"  src="{{ species.image_url }}" height="100px">
+{% else %}
+    {% include "species/no_image.html" %}
+{% endif %}

@@ -5,6 +5,7 @@ import json
 
 from .models import Species
 
+
 @csrf_exempt
 def tree(request):
     if request.method != 'POST':
@@ -27,6 +28,7 @@ def tree(request):
         }
         return HttpResponse(template.render(context, request))
 
+
 def autocomplete(request):
     if request.is_ajax():
         species = Species.objects.filter(title__startswith=request.GET.get('term', '').capitalize())
@@ -37,13 +39,16 @@ def autocomplete(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
+
 @csrf_exempt
 def search(request):
-    if(request.method == 'POST'):
+    if request.method == 'POST':
         species = Species.objects.get(title=request.POST.get('name'))
+        print(species.image_url)
         species = species.get_root()
         template = loader.get_template('species/species_with_childs.html')
         context = {
             'species': species,
         }
+        print(context)
         return HttpResponse(template.render(context, request))

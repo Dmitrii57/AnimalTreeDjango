@@ -1,9 +1,9 @@
 <table id="table{{ species.id }}">
     <tr>
-        <td colspan="100%">
-            <button onclick="update_species({{ species.id }}, {{ species.childs|length }})">
+        <td colspan="100%" width="100px">
+            <div onclick="update_species({{ species.id }}, {{ species.childs|length }})">
                 {% include "species/species.html" with species=species %}
-            </button>
+            </div>
         </td>
     </tr>
     <tr>

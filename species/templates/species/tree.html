@@ -1,6 +1,7 @@
 {% load static %}
     <script src="{% static '/species/js/update_species.js' %}"></script>
     <script src="{% static '/species/js/search_species.js' %}"></script>
+    <link rel="stylesheet" href="{% static '/species/css/style.css' %}">
 
 {% block title %}Species Tree{% endblock %}
 
@@ -18,13 +19,6 @@
             });
         });
     </script>
-    <style>
-        td{
-            border: solid 1px black;
-            text-align:center;
-            vertical-align: top;
-        }
-    </style>
     {% if species %}
         <form>
             <div class="ui-widget">
@@ -35,7 +29,8 @@
         <div>
             {% include "species/species_with_childs.html" with species=species %}
         </div>
-{% else %}
-    <p>No species in Data Base.</p>
-{% endif %}
+    {% else %}
+        <p>No species in Data Base.</p>
+    {% endif %}
+
 {% endblock %}
