@@ -1,12 +1,12 @@
-<table id="table{{ species.id }}">
+<table id="table{{ species.id }}" align="center">
     <tr>
-        <td colspan="100%" width="100px">
-            <div onclick="update_species({{ species.id }}, {{ species.childs|length }})">
+        <td class="parent" colspan="100%" >
+            <div class="cel" onclick="update_species({{ species.id }}, {{ species.childs|length }})">
                 {% include "species/species.html" with species=species %}
             </div>
         </td>
     </tr>
-    <tr>
+    <tr class="childs">
         {% for child in species.childs %}
             <td>
                 {% include "species/species_with_childs.html" with species=child %}

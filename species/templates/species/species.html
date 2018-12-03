@@ -1,6 +1,7 @@
-<p>{{species.title}}</p>
+<p class="titles">{{species.title}}</p>
 {% if species.image_url %}
-    <input id="image" type="image"  src="{{ species.image_url }}" height="100px">
+    <div class="illustration" style="background: url({{ species.image_url }}) no-repeat; background-size: contain; background-position: center;">
+    </div>
 {% else %}
     {% include "species/no_image.html" %}
 {% endif %}
